@@ -18,7 +18,7 @@ public class Breakout extends GDV5 {
 	
 	public static void main(String[] args) {
 
-		Brick.makeBricks(40, 5);
+		Brick.makeBricks(30, 6);
 		Breakout b = new Breakout();
 		b.start();
 	}

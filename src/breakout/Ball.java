@@ -10,6 +10,7 @@ public class Ball extends Rectangle {
 	private int dX, dY, width, height;
 	public static final Color VERY_LIGHT_GREEN = new Color(102, 255, 102);
 	
+	
 	public Ball(int dX, int dY, int startX, int startY, int width, int height) {
 		super(startX, startY, width, height);
 		this.dX = dX;
