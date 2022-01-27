@@ -35,9 +35,11 @@ public class Ball extends Rectangle {
 		return this.dX;
 	}
 	
-	public void move(Paddle p1) {
-		this.x += dX;
-		this.y += dY;
+	public void move(Paddle p1, Scoreboard sb) {
+		if(sb.Game == true) {
+			this.x += dX;
+			this.y += dY;
+		}
 		if(this.x+this.width >= GDV5.getMaxWindowX() || this.x <= 0) {
 			dX *= -1;
 		}
@@ -47,8 +49,9 @@ public class Ball extends Rectangle {
 		}
 		
 		if(this.y > GDV5.getMaxWindowY()) {
+			Brick.lives -= 1;
 			this.x = 300;
-			this.y = 300;
+			this.y = 400;
 			dX = 0;
 			dY = 0;
 			final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -68,5 +71,10 @@ public class Ball extends Rectangle {
 		if(this.y <= 0) {
 			this.dY *= -1;
 		}
+	}
+	
+	public void resetBall() {
+		this.x = 300;
+		this.y = 400;
 	}
 }

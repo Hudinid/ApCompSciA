@@ -18,7 +18,7 @@ public class Paddle extends Rectangle{
 	public int getH() {
 		return this.h;
 	}
-	
+		
 	public void setAI(boolean AI) {
 		this.AI = AI;
 	}
