@@ -1,4 +1,4 @@
-package snake;
+package snake.gameLookGood;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
@@ -18,7 +18,7 @@ public class ImageLoader {
 			img = ImageIO.read(new File(filePath));
 		}
 		catch(IOException e) {
-			
+			System.err.println(e);
 		}
 		
 		return img;
