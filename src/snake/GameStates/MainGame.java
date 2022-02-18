@@ -5,9 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import utilities.GDV5;
 import java.awt.Rectangle;
-
+import java.awt.event.KeyEvent;
+import snake.GameObjects.Scoreboard;
 import snake.GameObjects.Grid;
 import snake.GameObjects.actualSnake;
+import snake.gameLookGood.Sound;
 import snake.GameObjects.EnemySnake;
 import snake.GameObjects.Food;
 
@@ -18,39 +20,41 @@ public class MainGame extends SnakeGameState {
 	public static int rows = 20;
 	public static int cols = 20;
 	Grid grid = new Grid(maxX, maxY-100, rows, cols);
+	Scoreboard scoreboard = new Scoreboard();
 	actualSnake snake = new actualSnake(4, 4, true, 'd', rows, cols); 
-	EnemySnake enemySnake = new EnemySnake(4, 15, 'd', rows, cols);
+//	EnemySnake enemySnake = new EnemySnake(4, 15, 'd', rows, cols);
 	Food foodSpawner = new Food("Food");
 	int localTimer = 0;
-
+	Sound music = new Sound("src/snakeSounds/normalBG.wav");
+	
 	
 	public MainGame(SnakeGame snake) {
 		this.snakeState = snake;
+		music.se.play();
 //		actualSnake.addTail();
 //		actualSnake.addTail();
 //		enemySnake.moveEnemy();
 	}
 	
 	public void update() {
-		
 		snake.chooseDir();
-		if(localTimer%2 == 0) {
-
-			snake.snakeMoveHead();
-			snake.moveTail();
-			
-			enemySnake.moveEnemy();
-			enemySnake.enemyMoveTail();
-			
-			
+		if(localTimer%15 == 0) {
+			if(!snake.snakeMoveHead()) { music.se.stop(); snakeState.setState(new EndGame(snakeState));}
 		}
-		
 		localTimer ++;
+		if(GDV5.KeysPressed[KeyEvent.VK_ESCAPE]) {
+			music.se.stop();
+			snakeState.setState(new MenuGameState(snakeState));
+			actualSnake.allSnakeParts.clear();
+		}
 	}
+	
+	
 	
 	public void draw(Graphics2D win) {
 		grid.draw(win);
 		foodSpawner.spawnFood();
+		scoreboard.draw(win);
 		Grid.updateGrid(win, rows, cols);
 	}
 }

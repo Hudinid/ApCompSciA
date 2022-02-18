@@ -9,18 +9,19 @@ import javax.sound.sampled.Clip;
 public class Sound {
 
     String soundFile = "";
-    SoundEffect se = new SoundEffect();
+    public SoundEffect se = new SoundEffect();
 
     public static void main(String[] args) {
 
-        new Sound("");
+        new Sound(""); // put wav in here, different files for each sound :>
     }
+    
 
     public Sound(String sound) {
 
         this.soundFile = sound;
         se.setFile(sound);
-        se.play(); 
+//        se.play(); 
     }
     public class SoundEffect {
 
@@ -41,6 +42,10 @@ public class Sound {
 
         public void play() {
             clip.start();
+        }
+        
+        public void stop() {
+        	clip.stop();
         }
     }
 }

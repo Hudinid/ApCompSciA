@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import utilities.GDV5;
 public class SnakeGame extends GDV5 {
 	
-	private SnakeGameState state = new MainGame(this);
+	private SnakeGameState state = new MenuGameState(this);
 	
 	public void setState(SnakeGameState value) {
 		this.state = value;

@@ -6,7 +6,7 @@ import java.util.*;
 import java.awt.image.*;
 
 public class EnemySnake {
-	static ArrayList<EnemySnake> enemySnakeParts = new ArrayList<>();
+	public static ArrayList<EnemySnake> enemySnakeParts = new ArrayList<>();
 	int lastVisitedX, lastVisitedY, currX, currY;
 	static char direction;
 	public EnemySnake(int currX, int currY, char direction, int maxRow, int maxCol) {
@@ -30,15 +30,14 @@ public class EnemySnake {
 		ArrayList<QItem> path = QItem.findPath(this);
 		path.remove(0);
 		path.remove(0);
-//		System.out.println(path.size());
-//		for(int i = 0; i < path.size(); i ++) {
-//			System.out.println("X: " + path.get(i).row);
-//			System.out.println("Y: " + path.get(i).col);
-//			System.out.println("-----");
-//		}
+		if(path.size() > 0) {
 		this.lastVisitedX = this.currX;
 		this.lastVisitedY = this.currY;
 		Grid.map[currX][currY].type = "Blank";
+		if(this.currX > path.get(0).row) EnemySnake.direction = 'l';
+		if(this.currX < path.get(0).row) EnemySnake.direction = 'r';
+		if(this.currY > path.get(0).col) EnemySnake.direction = 'd';
+		if(this.currY < path.get(0).col) EnemySnake.direction = 'u'; 
 		this.currX = path.get(0).row;
 		this.currY = path.get(0).col;
 		if(Grid.map[currX][currY].type.equals("Food")) {
@@ -46,6 +45,23 @@ public class EnemySnake {
 			Food.spawn = 0;
 		}
 		Grid.map[currX][currY].type = "EnemySnake";
+		return;
+		}
+		else {
+			if(live()) return;
+		}
+		resetEnemy();
+	}
+	
+	public void resetEnemy() {
+		for(int i = 0; i < enemySnakeParts.size(); i ++) {
+			EnemySnake snake = enemySnakeParts.get(i);
+			Grid.map[snake.currX][snake.currY].type = "Blank"; 
+		}
+		enemySnakeParts.clear();
+		enemySnakeParts.add(this);
+		this.currX = 10;
+		this.currY = 10;
 	}
 	
 	public void enemyMoveTail() { //moving the tail pieces
@@ -65,7 +81,67 @@ public class EnemySnake {
 	public static void enemyAddTail() { //adding a tail to the snake
 
 		EnemySnake newSnake = new EnemySnake(enemySnakeParts.get(enemySnakeParts.size()-1).lastVisitedX, EnemySnake.enemySnakeParts.get(enemySnakeParts.size()-1).lastVisitedY);
-	}	
+	}
+	
+	public boolean live() {
+		if(isValid(currX, currY-1)) { //check up
+			lastVisitedX = this.currX;
+			lastVisitedY = this.currY;
+			Grid.map[this.currX][this.currY].type = "Blank"; 
+			this.currY--;
+			if(Grid.map[currX][currY].type.equals("Food")) {
+				enemyAddTail();
+				Food.spawn = 0;
+			}
+			Grid.map[currX][currY].type = "EnemySnake";
+			return true;
+		}
+		else if(isValid(currX, currY+1)) { //check down
+			lastVisitedX = this.currX;
+			lastVisitedY = this.currY;
+			Grid.map[this.currX][this.currY].type = "Blank";
+			this.currY++;
+			if(Grid.map[currX][currY].type.equals("Food")) {
+				enemyAddTail();
+				Food.spawn = 0;
+			}
+			Grid.map[currX][currY].type = "EnemySnake";
+			return true;
+		}
+		else if (isValid(currX-1, currY)) { //check left
+			lastVisitedX = this.currX;
+			lastVisitedY = this.currY;
+			Grid.map[this.currX][this.currY].type = "Blank";
+			this.currX--;
+			if(Grid.map[currX][currY].type.equals("Food")) {
+				enemyAddTail();
+				Food.spawn = 0;
+			}
+			Grid.map[currX][currY].type = "EnemySnake";
+			return true;
+		}
+		else if (isValid(currX+1, currY)) { // check right
+			lastVisitedX = this.currX;
+			lastVisitedY = this.currY;
+			Grid.map[this.currX][this.currY].type = "Blank";
+			this.currX++;
+			if(Grid.map[currX][currY].type.equals("Food")) {
+				enemyAddTail();
+				Food.spawn = 0;
+			}
+			Grid.map[currX][currY].type = "EnemySnake";
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isValid(int x, int y) {
+		if (x >= 0 && y >= 0 && x < Grid.map.length && y < Grid.map[0].length && !Grid.map[x][y].type.equals("EnemyTail")
+	    		&& !Grid.map[x][y].type.equals("Snake") && !Grid.map[x][y].type.equals("Tail")) {
+			return true;
+		}
+		return false;
+	}
 }
 class QItem {
 	  int row;
@@ -102,7 +178,6 @@ class QItem {
 	       
 	      // Destination found;
 	      if (Grid.map[p.row][p.col].type.equals("Food")) {
-	    	  System.out.println("hit");
 	    	  return p.list;
 	      }
 	      if(isValid(p.row-1, p.col, visited)) {
@@ -131,7 +206,7 @@ class QItem {
 	  }
 	   
 	  // checking where it's valid or not
-	  private static boolean isValid(int x, int y, boolean[][] visited)
+	  public static boolean isValid(int x, int y, boolean[][] visited)
 	  {
 	    if (x >= 0 && y >= 0 && x < Grid.map.length && y < Grid.map[0].length && !Grid.map[x][y].type.equals("EnemyTail")
 	    		&& visited[x][y] == false && !Grid.map[x][y].type.equals("Snake") && !Grid.map[x][y].type.equals("Tail")) {
