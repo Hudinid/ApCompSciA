@@ -86,7 +86,7 @@ public class actualSnake {
 					if(Grid.map[x][y].type.equals("Food")) { addTail(); Food.spawn = 0; Scoreboard.score++;
 //					Sound.main(null);
 					}
-					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail")) { cleanUp(); return false; }
+					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail") || Grid.map[x][y].type.equals("Wall")) { cleanUp(); return false; }
 					Grid.map[x][y].type = "Snake";
 					break;
 				case('d'): // down
@@ -101,7 +101,7 @@ public class actualSnake {
 					y ++;
 					if(Grid.map[x][y].type.equals("RemoveTail")) { Food.spawn = 0; Scoreboard.score++; actualSnake.powerUp = 1;};
 					if(Grid.map[x][y].type.equals("Food")) { addTail(); Food.spawn = 0;Scoreboard.score++; }
-					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail")) {cleanUp(); return false; }
+					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail") || Grid.map[x][y].type.equals("Wall")) {cleanUp(); return false; }
 					Grid.map[x][y].type = "Snake";
 					break;
 				case('l'): //left
@@ -116,7 +116,7 @@ public class actualSnake {
 					x --;
 					if(Grid.map[x][y].type.equals("RemoveTail")) { Food.spawn = 0; Scoreboard.score++; actualSnake.powerUp = 1;};
 					if(Grid.map[x][y].type.equals("Food")) { addTail(); Food.spawn = 0;Scoreboard.score++; }
-					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail")) { cleanUp(); return false; }
+					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail") || Grid.map[x][y].type.equals("Wall")) { cleanUp(); return false; }
 					Grid.map[x][y].type = "Snake";
 					break;
 				case('r'): // right
@@ -132,7 +132,7 @@ public class actualSnake {
 					x ++;
 					if(Grid.map[x][y].type.equals("RemoveTail")) { Food.spawn = 0; Scoreboard.score++; actualSnake.powerUp = 1;};
 					if(Grid.map[x][y].type.equals("Food")) { addTail(); Food.spawn = 0; Scoreboard.score++;}
-					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail")) { cleanUp(); return false; }
+					if(Grid.map[x][y].type.equals("Tail") || Grid.map[x][y].type.equals("EnemyTail") || Grid.map[x][y].type.equals("Wall")) { cleanUp(); return false; }
 					Grid.map[x][y].type = "Snake";
 					break;
 			}

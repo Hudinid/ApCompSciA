@@ -15,6 +15,7 @@ public class Grid {
 	public static final Color LIGHT_RED = new Color(255, 80, 80);
 	public static final Color DARK_BLUE = new Color(41, 127, 193);
 	public static final Color GRAY = new Color(220, 220, 220);
+	public static final Color WALL = new Color(45, 53, 69);
 	static ImageLoader imageLoader = new ImageLoader();
 	static BufferedImage apple = imageLoader.loader("src/images/apple.png");
 	static BufferedImage snakeUp = imageLoader.loader("src/images/SnakeUp.png");
@@ -35,7 +36,11 @@ public class Grid {
 		ySep = maxY/row;
 		for(int i = 0; i < row; i ++) { 
 			for(int j = 0; j < col; j ++) {
-				Tile tile = new Tile(i*xSep, j * ySep, xSep, ySep, "Blank");
+				int random = (int) (Math.random() * 20);
+				
+				Tile tile;
+				if(random == 5) {tile = new Tile(i*xSep, j * ySep, xSep, ySep, "Wall"); }
+				else { tile = new Tile(i*xSep, j * ySep, xSep, ySep, "Blank");}
 				map[i][j] = tile;
 			}
 		}
@@ -100,7 +105,10 @@ public class Grid {
 					map[i][j].fillTile(Color.YELLOW, win);
 				}
 				if(map[i][j].type.equals("RemoveTail")) {
-					map[i][j].fillTile(Color.GRAY, win);
+					map[i][j].fillTile(GRAY, win);
+				}
+				if(map[i][j].type.equals("Wall")) {
+					map[i][j].fillTile(WALL, win);
 				}
 			}
 		}

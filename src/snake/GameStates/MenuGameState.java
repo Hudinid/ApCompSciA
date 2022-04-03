@@ -29,6 +29,9 @@ public class MenuGameState extends SnakeGameState {
 		if(GDV5.KeysPressed[KeyEvent.VK_3]) {
 			snakeState.setState(new TwoPlayer(snakeState));
 		}
+		if(GDV5.KeysPressed[KeyEvent.VK_4]) {
+			snakeState.setState(new Help(snakeState));
+		}
 	}
 	
 	public void draw(Graphics2D win) {
@@ -41,7 +44,8 @@ public class MenuGameState extends SnakeGameState {
 		win.setFont(new Font("Courier New", Font.BOLD, 24));
 		win.drawString("1. Single Player (Normal) ", GDV5.getMaxWindowX()/2 - GDV5.getMaxWindowX()/3, 180);
 		win.drawString("2. Single Player (With Enemy Snake) ", GDV5.getMaxWindowX()/2 - GDV5.getMaxWindowX()/3, 260);
-		win.drawString("3. Single Player (Multiplayer) ", GDV5.getMaxWindowX()/2 - GDV5.getMaxWindowX()/3, 340);
+		win.drawString("3. Local Multiplayer ", GDV5.getMaxWindowX()/2 - GDV5.getMaxWindowX()/3, 340);
+		win.drawString("4. Help Screen ", GDV5.getMaxWindowX()/2 - GDV5.getMaxWindowX()/3, 420);
 	}
 	
 }

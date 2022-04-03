@@ -28,7 +28,7 @@ public class Food {
 		spawn = 1;
 		spawnX = (int) (Math.random()* MainGame.rows);
 		spawnY = (int) (Math.random() * MainGame.cols);
-		power = (int) (Math.random() * 4);
+		power = (int) (Math.random() * 12);
 		
 //		if(power == 4) { // slow down power 
 //			this.type = "Slow";

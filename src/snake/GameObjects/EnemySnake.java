@@ -209,7 +209,7 @@ class QItem {
 	  public static boolean isValid(int x, int y, boolean[][] visited)
 	  {
 	    if (x >= 0 && y >= 0 && x < Grid.map.length && y < Grid.map[0].length && !Grid.map[x][y].type.equals("EnemyTail")
-	    		&& visited[x][y] == false && !Grid.map[x][y].type.equals("Snake") && !Grid.map[x][y].type.equals("Tail")) {
+	    		&& visited[x][y] == false && !Grid.map[x][y].type.equals("Snake") && !Grid.map[x][y].type.equals("Tail") && !Grid.map[x][y].type.equals("Wall")) {
 	      return true;
 	    }
 	    return false;
